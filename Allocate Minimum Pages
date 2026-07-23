@@ -1,0 +1,39 @@
+class Solution {
+    public int findPages(int[] arr, int k) {
+        if(k>arr.length)return -1;
+        // code here
+        long low= 0;
+        long high=0;
+        for(int ele : arr){
+            low= Math.max(low,ele);
+            high += ele;
+        }
+        
+        while(low<high){
+            long mid= low + (high-low)/2;
+            if( isPossible( arr, k, mid)){
+                high=mid;
+            }
+            else{
+                low=mid+1;
+            }
+            
+    
+        }
+        return (int) low;
+        
+    }
+    private boolean isPossible(int []arr,int k , long mid){
+        int students=1;
+        long sum=0;
+        for(int ele : arr){
+            if(sum+ele > mid){
+                students++;
+                sum=0;
+            }
+            sum+=ele;
+        }
+        return students<=k;
+    }
+    
+}
